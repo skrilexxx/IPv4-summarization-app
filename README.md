@@ -5,4 +5,4 @@ Teams Team : V3ABC-TP20-SAJA-2223
 
 sitar: nastuduje sumarizaci, vysvetli koderovi
 
-koder: nakoduje to asi v pythonu nebo js
+koder: nakoduje to 
