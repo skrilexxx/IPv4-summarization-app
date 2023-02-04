@@ -10,6 +10,10 @@
 ## Jazyk:
 * Python
 
+## Návrh:
+![Tkinter](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.png)
+
+
 ## UML:
 ![UML](https://github.com/skrilexxx/Tymovka-20/blob/main/uml.png)
 
