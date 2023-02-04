@@ -11,7 +11,7 @@
 * Python
 
 ## Návrh:
-![Tkinter](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.png)
+![Tkinter](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.PNG)
 
 
 ## UML:
