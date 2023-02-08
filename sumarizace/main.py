@@ -4,17 +4,20 @@ sirka = 600
 vyska = 600
 
 dpg.create_context()
-dpg.create_viewport(title='Custom Title', width=sirka, height=vyska)
+dpg.create_viewport(title='Sumarizace IPv4', width=sirka, height=vyska)
 
+def vstup(sender,app_data,user_data):
+	dpg.set_value("Vysledek", dpg.get_value(sender))
 
-with dpg.window(label="Sumarizace IPv4", width=sirka, height=vyska):
-	dpg.add_text("IP address:")
+with dpg.window(tag="Primary Window", label="Sumarizace IPv4", width=sirka, height=vyska):
+	with dpg.group(horizontal=True):
+		dpg.add_text("IP address:")
+		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30)
 	dpg.add_button(label="Count")
-	dpg.add_input_text(label="string", default_value="Quick brown fox")
-	dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
+	dpg.add_text(tag="Vysledek")
 
 
-
+dpg.set_primary_window("Primary Window", True)
 dpg.setup_dearpygui()
 dpg.show_viewport()
 dpg.start_dearpygui()
