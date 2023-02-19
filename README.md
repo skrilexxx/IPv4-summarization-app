@@ -4,8 +4,8 @@
 * Teams Team : V3ABC-TP20-SAJA-2223
 
 ## Práce:
-* sitar: nastuduje sumarizaci, vysvetli koderovi
-* koder: nakoduje to 
+* SITE: nastuduje sumarizaci, vysvetli koderovi
+* PROG: nakoduje to 
 
 ## Jazyk:
 * Python
