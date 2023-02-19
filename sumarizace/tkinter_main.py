@@ -18,8 +18,8 @@ root.geometry("400x300")
 global entry1
 global entry2
 Label(root, text="Sumarizace IPv4 ").place(x=150,y=0)
-Label(root, text="Enter IP address").place(x=20,y=20)
-Label(root, text="Enter IP address").place(x=20,y=40)
+Label(root, text="Enter IP address:").place(x=20,y=20)
+Label(root, text="Enter IP address:").place(x=20,y=40)
 
 #prvni Ip
 entry1a=Entry(root, width=5)
@@ -33,9 +33,9 @@ entry1c.place(x=220,y=20)
 Label(root, text=".").place(x=250,y=20)
 entry1d=Entry(root, width=5)
 entry1d.place(x=260, y=20)
-Label(root, text="/").place(x=310,y=20)
+Label(root, text="/").place(x=300,y=20)
 entry1f=Entry(root, width=3)
-entry1f.place(x=320, y=20)
+entry1f.place(x=310, y=20)
 
 #druha ip
 entry2a=Entry(root, width=5)
@@ -49,9 +49,9 @@ entry2c.place(x=220,y=40)
 Label(root, text=".").place(x=250,y=40)
 entry2d=Entry(root, width=5)
 entry2d.place(x=260, y=40)
-Label(root, text="/").place(x=310,y=40)
+Label(root, text="/").place(x=300,y=40)
 entry2f=Entry(root, width=3)
-entry2f.place(x=320, y=40)
+entry2f.place(x=310, y=40)
 
 
 
