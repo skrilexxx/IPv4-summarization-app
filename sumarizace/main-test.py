@@ -30,14 +30,20 @@ def add_radek():
 
 		dpg.add_text(tag="Vysledek")
 
-#získá celou Ip z inputu
+#získá celou Ip z inputu, v D i B
 def get_full_ip():
 	output = ""
 	if ((dpg.get_value("IP_1_1") != "***") and (dpg.get_value("IP_1_1") != "") and (dpg.get_value("IP_1_4") != "***") and (dpg.get_value("IP_1_4") != "")):
-		for i in range(4):
-			output += str(dpg.get_value("IP_1_" + str(i+1)))
-			output += "."
-		dpg.set_value("test", output[:-1])
+		if dpg.get_value("binary"):
+			for i in range(4):
+				output += str(bin(int(dpg.get_value("IP_1_" + str(i+1))))[2:])
+				output += "."
+			dpg.set_value("Vysledek", output[:-1])			
+		else:	
+			for i in range(4):
+				output += str(dpg.get_value("IP_1_" + str(i+1)))
+				output += "."
+			dpg.set_value("Vysledek", output[:-1])
 
 with dpg.window(tag="Primary Window", label="Sumarizace IPv4", width=sirka, height=vyska):
 	#jeden řádek = jedna IP

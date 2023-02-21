@@ -17,3 +17,6 @@
 ## UML:
 ![UML](https://github.com/skrilexxx/Tymovka-20/blob/main/uml.png)
 
+## Poznamky:
+* Design se bude delat na konec
+* hlavni kod bude v jine slozce
