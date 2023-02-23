@@ -1,0 +1,24 @@
+{
+    // Pro informace o možných atributech použijte technologii IntelliSense.
+    // Umístěním ukazatele myši zobrazíte popisy existujících atributů.
+    // Další informace najdete tady: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Spustit Test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}${pathSeparator}sumarizace${pathSeparator}main-test.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}${pathSeparator}sumarizace"
+        },
+        {
+            "name": "Spustit Main",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}${pathSeparator}sumarizace${pathSeparator}main.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}${pathSeparator}sumarizace"
+        }
+    ]
+}
