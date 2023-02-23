@@ -16,8 +16,16 @@ def vstup(sender,app_data,user_data):
 			dpg.set_value("Vysledek_n", dpg.get_value(sender))
 
 def limit(sender, app_data, user_data):
-	if len(app_data) > user_data:
+	if app_data != "":
+		if int(app_data) < 0:
+			dpg.set_value(sender, "0")
+		elif int(app_data) > 255:
+			dpg.set_value(sender, "255")
+	elif len(app_data) > user_data:
 		dpg.set_value(sender, app_data[:user_data])
+		
+
+			
 
 
 def add_radek():
