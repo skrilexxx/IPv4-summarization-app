@@ -15,25 +15,24 @@ def vstup(sender,app_data,user_data):
 		else:
 			dpg.set_value("Vysledek_n", dpg.get_value(sender))
 
-#tady chci funkci co bude pridavat radky na ip (nefunguje jeste)
+#tady chci funkci co bude pridavat radky na ip (funguje na 50% jeste)
 def add_radek(pocet):
 	with dpg.group(horizontal=True):
 		dpg.add_text("IP address:")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_"+ str(pocet) +"_1", decimal=(True)) #IP_1 (- první IP) _1 (- část IP 1-5, 5= prefix)
+		dpg.add_input_text(default_value="***", on_enter=True,  width=30, tag="IP_"+ str(pocet) +"_1", decimal=(True)) #IP_1 (- první IP) _1 (- část IP 1-5, 5= prefix)
 		dpg.add_text(".")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_"+ str(pocet) +"_2", decimal=(True))
+		dpg.add_input_text(default_value="***", on_enter=True,  width=30, tag="IP_"+ str(pocet) +"_2", decimal=(True))
 		dpg.add_text(".")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_"+ str(pocet) +"_3", decimal=(True))
+		dpg.add_input_text(default_value="***", on_enter=True,  width=30, tag="IP_"+ str(pocet) +"_3", decimal=(True))
 		dpg.add_text(".")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_"+ str(pocet) +"_4", decimal=(True))
+		dpg.add_input_text(default_value="***", on_enter=True,  width=30, tag="IP_"+ str(pocet) +"_4", decimal=(True))
 		dpg.add_text("/")
-		dpg.add_input_text(default_value="**", on_enter=True, callback=vstup, width=20, tag="IP_"+ str(pocet) +"_5", decimal=(True))
+		dpg.add_input_text(default_value="**", on_enter=True,  width=20, tag="IP_"+ str(pocet) +"_5", decimal=(True))
 
 		dpg.add_text(tag="Vysledek_" + str(pocet))
 
 	dpg.set_value("Vysledek_" + str(pocet), "")
 	pocet += 1
-	dpg.set_value("Vysledek_n", str(pocet))
 
 #získá celou Ip z inputu, v D i B
 def get_full_ip():
@@ -54,20 +53,6 @@ def get_full_ip():
 			dpg.set_value("Vysledek_" + str(i+1), "Zkontrolujte zadanout")
 
 with dpg.window(tag="Primary Window", label="Sumarizace IPv4", width=sirka, height=vyska):
-	#jeden řádek = jedna IP
-	with dpg.group(horizontal=True):
-		dpg.add_text("IP address:")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_n_1", decimal=(True)) #IP_1 (- první IP) _1 (- část IP 1-5, 5= prefix)
-		dpg.add_text(".")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_n_2", decimal=(True))
-		dpg.add_text(".")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_n_3", decimal=(True))
-		dpg.add_text(".")
-		dpg.add_input_text(default_value="***", on_enter=True, callback=vstup, width=30, tag="IP_n_4", decimal=(True))
-		dpg.add_text("/")
-		dpg.add_input_text(default_value="**", on_enter=True, callback=vstup, width=20, tag="IP_n_5", decimal=(True))
-
-		dpg.add_text(tag="Vysledek_n")
 
 	dpg.add_button(label="+", tag="plus_button", callback=add_radek(pocet)) #přidá další řádek na IP
 	dpg.add_button(label="Count", callback=get_full_ip) #spočítá sumarizační ip adresu
