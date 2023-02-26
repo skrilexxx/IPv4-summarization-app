@@ -3,6 +3,7 @@ import dearpygui.dearpygui as dpg
 sirka = 600
 vyska = 600
 pocet = 1
+list_of_IPs = []
 
 dpg.create_context()
 dpg.create_viewport(title='Sumarizace IPv4', width=sirka, height=vyska)
@@ -16,6 +17,7 @@ def vstup(sender,app_data,user_data):
 			dpg.set_value("Vysledek_n", dpg.get_value(sender))
 
 def limit(sender, app_data, user_data):
+	"""Limituje vstup 0-255"""
 	if app_data != "":
 		if int(app_data) < 0:
 			dpg.set_value(sender, "0")
@@ -48,24 +50,49 @@ def add_radek():
 	dpg.set_value("Vysledek_" + str(pocet), "")
 	pocet += 1
 
+def min_max(listIp) -> list[str]:
+	"""Najde nejvetsi[0] a nejmesi[1] IP addresu (a nejmensi prefix) """
+	return [max(listIp), min(listIp)]
+
+		
+	
+
+def sumarization():
+	"""Spočíta sumarizační IP adresu"""
+	global list_of_IPs
+	BigSmallIp = min_max(list_of_IPs)
+	print(BigSmallIp)
+
+
 
 def get_full_ip():
 	"""získá celou Ip z inputu, v D i B"""
-	for i in range(pocet):
+	global list_of_IPs
+	IpList = []
+	for i in range(pocet-1):
 		output = ""
-		if ((dpg.get_value("IP_"+ str(i+1) +"_1") != "***") and (dpg.get_value("IP_"+ str(i+1) +"_1") != "") and (dpg.get_value("IP_"+ str(i+1) +"_4") != "***") and (dpg.get_value("IP_"+ str(i+1) +"_4") != "")):
+		outputBin = ""
+		if ((dpg.get_value("IP_"+ str(i+1) +"_1") != "") and  (dpg.get_value("IP_"+ str(i+1) +"_4") != "")):
 			if dpg.get_value("binary"):
 				for y in range(4):
-					output += str(bin(int(dpg.get_value("IP_"+ str(i+1) +"_" + str(y+1))))[2:]).zfill(8)
+					outputBin += str(bin(int(dpg.get_value("IP_"+ str(i+1) +"_" + str(y+1))))[2:]).zfill(8)
+					outputBin += "."
+					output += str(dpg.get_value("IP_"+ str(i+1) +"_" + str(y+1)))
 					output += "."
-				dpg.set_value("Vysledek_" + str(i+1), output[:-1])			
+				IpList.append(output[:-1])
+				dpg.set_value("Vysledek_" + str(i+1), outputBin[:-1])			
 			else:	
 				for x in range(4):
 					output += str(dpg.get_value("IP_"+ str(i+1) +"_" + str(x+1)))
 					output += "."
-				dpg.set_value("Vysledek_" + str(i+1), output[:-1])
+				IpList.append(output[:-1])
+				dpg.set_value("Vysledek_" + str(i+1), str(output[:-1]))
 		else:
 			dpg.set_value("Vysledek_" + str(i+1), "Zkontrolujte zadanout IP")
+	list_of_IPs = IpList.copy()
+	sumarization()
+		
+		
 
 with dpg.window(tag="Primary Window", label="Sumarizace IPv4", width=sirka, height=vyska):
 
