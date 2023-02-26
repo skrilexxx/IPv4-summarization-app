@@ -10,6 +10,9 @@
 ## Jazyk:
 * Python
 
+## Progres:
+* 65%
+
 ## Návrh:
 ![Tkinter](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.PNG)
 
