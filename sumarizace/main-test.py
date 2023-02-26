@@ -1,5 +1,7 @@
 import dearpygui.dearpygui as dpg
 
+#ve finalnim programu to bude classa
+
 sirka = 600
 vyska = 600
 pocet = 1
@@ -26,10 +28,6 @@ def limit(sender, app_data, user_data):
 			dpg.set_value(sender, "255")
 	elif len(app_data) > user_data:
 		dpg.set_value(sender, app_data[:user_data])
-		
-
-			
-
 
 def add_radek():
 	"""Pridani radku na IP"""
@@ -62,9 +60,6 @@ def min_max(listIp, prefixList) -> list[str]:
 	"""Najde nejvetsi[0] a nejmesi[1] IP addresu (a nejmensi prefix) """
 	return [max(listIp), min(listIp), min(prefixList)]
 
-		
-	
-
 def sumarization():
 	"""Spočíta sumarizační IP adresu"""
 	global list_of_IPs
@@ -92,7 +87,7 @@ def sumarization():
 	print(maxBin, minBin)
 
 	for i in range(len(maxBin)):
-		
+
 		sumSeg = ""
 		for y in range(len(maxBin[i])):
 			if same and maxBin[i][y] == minBin[i][y]:
@@ -115,7 +110,7 @@ def sumarization():
 
 	for number in sumBin:
 		sumIp += str(int(number, 2))+"."
-	
+
 	dpg.set_value("VysledekSumarizace", sumIp[:-1] + " / " + str(finalPrefix))
 
 def get_full_ip():
@@ -137,8 +132,8 @@ def get_full_ip():
 					output += "."
 				IpList.append(output[:-1])
 				prefixList.append(int(dpg.get_value("IP_"+ str(i+1) +"_5")))
-				dpg.set_value("Vysledek_" + str(i+1), outputBin[:-1])	
-			else:	
+				dpg.set_value("Vysledek_" + str(i+1), outputBin[:-1])
+			else:
 				for x in range(4):
 					output += str(dpg.get_value("IP_"+ str(i+1) +"_" + str(x+1)))
 					output += "."
@@ -149,8 +144,6 @@ def get_full_ip():
 			dpg.set_value("Vysledek_" + str(i+1), "Zkontrolujte zadanout IP")
 	list_of_IPs = IpList.copy()
 	sumarization()
-		
-		
 
 with dpg.window(tag="Primary Window", label="Sumarizace IPv4", width=sirka, height=vyska):
 
@@ -162,7 +155,7 @@ with dpg.window(tag="Primary Window", label="Sumarizace IPv4", width=sirka, heig
 		dpg.add_button(label="-", tag="minus_button", callback=remove_radek)
 		dpg.add_button(label="Count", callback=get_full_ip) #spočítá sumarizační ip adresu
 		dpg.add_checkbox(label="Binární", tag="binary") #pokud checked - vypíše je v binárním tvaru
-		
+
 	with dpg.group(tag="Sumarizovana IP", horizontal=True):
 		dpg.add_text("Sumarizovaná IP adresa: ")
 		dpg.add_text(tag="VysledekSumarizace")
