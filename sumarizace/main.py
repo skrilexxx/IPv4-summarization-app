@@ -1,6 +1,6 @@
 import dearpygui.dearpygui as dpg
 
-class sumarization:
+class summarization:
     def __init__(self) -> None:
         self.width = 600
         self.height = 600
@@ -11,8 +11,8 @@ class sumarization:
 
     def run(self) -> None:
         dpg.create_context()
-        dpg.create_viewport(title='Sumarization IPv4', width=self.width, height=self.height)
-        with dpg.window(tag="Primary Window", label="Sumarizace IPv4", width=self.width, height=self.height):
+        dpg.create_viewport(title='Summarization IPv4', width=self.width, height=self.height)
+        with dpg.window(tag="Primary Window", label="Summarization IPv4", width=self.width, height=self.height):
             dpg.add_group(tag="lines")
             self.add_line()
             self.add_line()
@@ -20,10 +20,10 @@ class sumarization:
                 dpg.add_button(label="+", tag="plus_button", callback=lambda: self.add_line()) #adds line for IP
                 dpg.add_button(label="-", tag="minus_button", callback=self.remove_line) #removes line with IP
                 dpg.add_button(label="Count", callback=self.get_full_ip) #counts sumarization IP address
-                dpg.add_checkbox(label="Binární", tag="binary") #if checked - shows ip addresses in binary
+                dpg.add_checkbox(label="Binary", tag="binary") #if checked - shows ip addresses in binary
 
-            with dpg.group(tag="Sumarized IP", horizontal=True):
-                dpg.add_text("Sumarizovaná IP adresa: ")
+            with dpg.group(tag="Summarized IP", horizontal=True):
+                dpg.add_text("Summarized IP address: ")
                 dpg.add_text(tag="SumarizationResult")
 
         dpg.set_primary_window("Primary Window", True)
@@ -72,7 +72,7 @@ class sumarization:
         return [max(listIp), min(listIp), min(List)]
 
     def ip_sumarization(self):
-        """Counts sumarization IP address"""
+        """Counts summarization IP address"""
         BigSmallIp = self.min_max(self.listOfIPs, self.prefixList)
         print(BigSmallIp)
 
@@ -120,7 +120,7 @@ class sumarization:
         for number in sumBin:
             sumIp += str(int(number, 2))+"."
 
-        dpg.set_value("SumarizationResult", sumIp[:-1] + " / " + str(finalPrefix))
+        dpg.set_value("SummarizationResult", sumIp[:-1] + " / " + str(finalPrefix))
 
 
     def get_full_ip(self):
@@ -155,5 +155,5 @@ class sumarization:
 
 
 
-w1 = sumarization()
+w1 = summarization()
 w1.run()
