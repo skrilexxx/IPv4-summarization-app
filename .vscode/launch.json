@@ -8,17 +8,17 @@
             "name": "Spustit Test",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}${pathSeparator}sumarizace${pathSeparator}main-test.py",
+            "program": "${workspaceFolder}${pathSeparator}test${pathSeparator}main-test.py",
             "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}${pathSeparator}sumarizace"
+            "cwd": "${workspaceFolder}${pathSeparator}test"
         },
         {
             "name": "Spustit Main",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}${pathSeparator}sumarizace${pathSeparator}main.py",
+            "program": "${workspaceFolder}${pathSeparator}summarization${pathSeparator}main.py",
             "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}${pathSeparator}sumarizace"
+            "cwd": "${workspaceFolder}${pathSeparator}summarization"
         }
     ]
 }
