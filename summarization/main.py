@@ -1,6 +1,6 @@
 import dearpygui.dearpygui as dpg
 
-class summarization:
+class Summarization:
     def __init__(self) -> None:
         self.width = 600
         self.height = 600
@@ -155,5 +155,5 @@ class summarization:
 
 
 
-w1 = summarization()
+w1 = Summarization()
 w1.run()
