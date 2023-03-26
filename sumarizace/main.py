@@ -24,7 +24,7 @@ class summarization:
 
             with dpg.group(tag="Summarized IP", horizontal=True):
                 dpg.add_text("Summarized IP address: ")
-                dpg.add_text(tag="SumarizationResult")
+                dpg.add_text(tag="SummarizationResult")
 
         dpg.set_primary_window("Primary Window", True)
         dpg.setup_dearpygui()
@@ -32,7 +32,7 @@ class summarization:
         dpg.start_dearpygui()
         dpg.destroy_context()
 
-    def limit(sender, app_data, user_data):
+    def limit(self, sender, app_data, user_data):
         """Limits input 0-255 - does not work right now"""
         if app_data != "":
             if int(app_data) < 0:
@@ -67,9 +67,9 @@ class summarization:
             self.count -= 1
             dpg.delete_item("line_" + str(self.count))
 
-    def min_max(listIp, List) -> list[str]:
+    def min_max(self, listIp, prefList) -> list[str]:
         """Finds biggest[0] a smallest[1] IP address and smallest prefix """
-        return [max(listIp), min(listIp), min(List)]
+        return [max(listIp), min(listIp), min(prefList)]
 
     def ip_sumarization(self):
         """Counts summarization IP address"""
