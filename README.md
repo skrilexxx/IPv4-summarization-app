@@ -5,13 +5,13 @@
 
 ## Práce:
 * SITE: nastuduje sumarizaci, vysvetli koderovi
-* PROG: nakoduje to 
+* PROG: nakoduje to
 
 ## Jazyk:
 * Python
 
 ## Progres:
-* 65%
+* 85%
 
 ## Návrh:
 ![Tkinter](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.PNG)
