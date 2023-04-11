@@ -13,8 +13,8 @@
 ## Progres:
 * 85%
 
-## Návrh:
-![Tkinter](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.PNG)
+## Vzhled:
+![DearPyGui](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.PNG)
 
 
 ## UML:
