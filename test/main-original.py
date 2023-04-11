@@ -2,12 +2,11 @@ import dearpygui.dearpygui as dpg
 
 class Summarization:
     def __init__(self) -> None:
-        self.width = 625
-        self.height = 625
+        self.width = 600
+        self.height = 600
         self.count = 1
         self.listOfIPs = []
         self.prefixList = []
-        self.edge = 0
 
 
     def run(self) -> None:
@@ -20,7 +19,7 @@ class Summarization:
             with dpg.group(horizontal=True):
                 dpg.add_button(label="+", tag="plus_button", callback=lambda: self.add_line()) #adds line for IP
                 dpg.add_button(label="-", tag="minus_button", callback=self.remove_line) #removes line with IP
-                dpg.add_button(label="Count", callback=self.ip_sumarization) #counts sumarization IP address
+                dpg.add_button(label="Count", callback=self.get_full_ip) #counts sumarization IP address
                 dpg.add_checkbox(label="Binary", tag="binary") #if checked - shows ip addresses in binary
 
             with dpg.group(tag="Summarized IP", horizontal=True):
@@ -34,7 +33,7 @@ class Summarization:
         dpg.destroy_context()
 
     def limit(self, sender, app_data, user_data):
-        """Limits input 0-255"""
+        """Limits input 0-255 - does not work right now"""
         if app_data != "":
             if int(app_data) < 0:
                 dpg.set_value(sender, "0")
@@ -74,8 +73,8 @@ class Summarization:
 
     def ip_sumarization(self):
         """Counts summarization IP address"""
-        self.get_full_ip()
         BigSmallIp = self.min_max(self.listOfIPs, self.prefixList)
+        print(BigSmallIp)
 
         max = BigSmallIp[0].split(".")
         min = BigSmallIp[1].split(".")
@@ -83,7 +82,6 @@ class Summarization:
         sumZeros = 0
         maxPrefix = 32
         finalPrefix = 0
-        self.edge = 0
 
         maxBin = []
         minBin = []
@@ -95,19 +93,22 @@ class Summarization:
             maxBin.append(bin(int(max[i]))[2:].zfill(8))
             minBin.append(bin(int(min[i]))[2:].zfill(8))
 
+        print(maxBin, minBin)
+
         for i in range(len(maxBin)):
 
             sumSeg = ""
             for y in range(len(maxBin[i])):
                 if same and maxBin[i][y] == minBin[i][y]:
                     sumSeg = sumSeg + str(maxBin[i][y])
-                    self.edge += 1
                 else:
                     same = False
                 if same == False:
                     sumSeg = sumSeg + "0"
                     sumZeros += 1
+            print(sumSeg)
             sumBin.append(sumSeg)
+        print(sumBin)
 
         if (maxPrefix-sumZeros) == prefix:
             finalPrefix = prefix
@@ -118,8 +119,6 @@ class Summarization:
 
         for number in sumBin:
             sumIp += str(int(number, 2))+"."
-        print(self.edge)
-        self.show_edge()
 
         dpg.set_value("SummarizationResult", sumIp[:-1] + " / " + str(finalPrefix))
 
@@ -131,7 +130,18 @@ class Summarization:
         IpList = []
         for i in range(self.count-1):
             output = ""
+            outputBin = ""
             if ((dpg.get_value("IP_"+ str(i+1) +"_1") != "") and  (dpg.get_value("IP_"+ str(i+1) +"_4") != "") and (dpg.get_value("IP_"+ str(i+1) +"_5") != "")):
+                if dpg.get_value("binary"):
+                    for y in range(4):
+                        outputBin += str(bin(int(dpg.get_value("IP_"+ str(i+1) +"_" + str(y+1))))[2:]).zfill(8)
+                        outputBin += "."
+                        output += str(dpg.get_value("IP_"+ str(i+1) +"_" + str(y+1)))
+                        output += "."
+                    IpList.append(output[:-1])
+                    self.prefixList.append(int(dpg.get_value("IP_"+ str(i+1) +"_5")))
+                    dpg.set_value("Result_" + str(i+1), outputBin[:-1])
+                else:
                     for x in range(4):
                         output += str(dpg.get_value("IP_"+ str(i+1) +"_" + str(x+1)))
                         output += "."
@@ -141,44 +151,9 @@ class Summarization:
             else:
                 dpg.set_value("Result_" + str(i+1), "Zkontrolujte zadanout IP")
         self.listOfIPs= IpList.copy()
+        self.ip_sumarization()
 
-    def show_edge(self):
-        for i in range(self.count-1):
-            output = ""
-            outputBinHelp = ""
-            outputBin = ""
-            edge_done = False
-            edgeHelp = self.edge
-            if ((dpg.get_value("IP_"+ str(i+1) +"_1") != "") and  (dpg.get_value("IP_"+ str(i+1) +"_4") != "") and (dpg.get_value("IP_"+ str(i+1) +"_5") != "")):
-                if dpg.get_value("binary"):
-                    for y in range(4):
-                        outputBinHelp += str(bin(int(dpg.get_value("IP_"+ str(i+1) +"_" + str(y+1))))[2:]).zfill(8)
-                        outputBinHelp += "."
 
-                    for bit in outputBinHelp:
-                            if bit != ".":
-                                if edgeHelp == 0 and edge_done == False:
-                                    outputBin += " | "
-                                    outputBin += str(bit)
-                                    edge_done = True
-                                else:
-                                    edgeHelp -= 1
-                                    outputBin += str(bit)
-                            elif bit == ".":
-                                outputBin += str(bit)
-                            else:
-                                outputBin = "Error"
-
-                    self.prefixList.append(int(dpg.get_value("IP_"+ str(i+1) +"_5")))
-                    dpg.set_value("Result_" + str(i+1), outputBin[:-1])
-                else:
-                    for x in range(4):
-                        output += str(dpg.get_value("IP_"+ str(i+1) +"_" + str(x+1)))
-                        output += "."
-                    self.prefixList.append(int(dpg.get_value("IP_"+ str(i+1) +"_5")))
-                    dpg.set_value("Result_" + str(i+1), str(output[:-1]))
-            else:
-                dpg.set_value("Result_" + str(i+1), "Check entered IP")
 
 w1 = Summarization()
 w1.run()
