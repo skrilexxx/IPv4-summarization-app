@@ -8,7 +8,9 @@ class Summarization:
         self.listOfIPs = []
         self.prefixList = []
         self.edge = 0
-
+        self.finalPrefix = 0
+        self.sumBinIp = ""
+        self.sumIp = ""
 
     def run(self) -> None:
         dpg.create_context()
@@ -20,11 +22,11 @@ class Summarization:
             with dpg.group(horizontal=True):
                 dpg.add_button(label="+", tag="plus_button", callback=lambda: self.add_line()) #adds line for IP
                 dpg.add_button(label="-", tag="minus_button", callback=self.remove_line) #removes line with IP
-                dpg.add_button(label="Count", callback=self.ip_sumarization) #counts sumarization IP address
+                dpg.add_button(label="Count", callback=self.ip_summarization) #counts sumarization IP address
                 dpg.add_checkbox(label="Binary", tag="binary") #if checked - shows ip addresses in binary
 
             with dpg.group(tag="Summarized IP", horizontal=True):
-                dpg.add_text("Summarized IP address: ")
+                dpg.add_text("Summarized IP address:")
                 dpg.add_text(tag="SummarizationResult")
 
         dpg.set_primary_window("Primary Window", True)
@@ -72,7 +74,7 @@ class Summarization:
         """Finds biggest[0] a smallest[1] IP address and smallest prefix """
         return [max(listIp), min(listIp), min(prefList)]
 
-    def ip_sumarization(self):
+    def ip_summarization(self):
         """Counts summarization IP address"""
         self.get_full_ip()
         BigSmallIp = self.min_max(self.listOfIPs, self.prefixList)
@@ -82,13 +84,14 @@ class Summarization:
         prefix = BigSmallIp[2]
         sumZeros = 0
         maxPrefix = 32
-        finalPrefix = 0
+        self.finalPrefix = 0
         self.edge = 0
 
         maxBin = []
         minBin = []
         sumBin = []
-        sumIp = ""
+        self.sumBinIp = ""
+        self.sumIp = ""
         same = True
 
         for i in range(len(max)):
@@ -110,19 +113,16 @@ class Summarization:
             sumBin.append(sumSeg)
 
         if (maxPrefix-sumZeros) == prefix:
-            finalPrefix = prefix
+            self.finalPrefix = prefix
         elif (maxPrefix-sumZeros) > prefix:
-            finalPrefix = prefix
+            self.finalPrefix = prefix
         else:
-            finalPrefix = (maxPrefix-sumZeros)
+            self.finalPrefix = (maxPrefix-sumZeros)
 
         for number in sumBin:
-            sumIp += str(int(number, 2))+"."
-        print(self.edge)
+            self.sumIp += str(int(number, 2))+"."
+            self.sumBinIp += str(number)+"."
         self.show_edge()
-
-        dpg.set_value("SummarizationResult", sumIp[:-1] + " / " + str(finalPrefix))
-
 
     def get_full_ip(self):
         """Gets full IP address from input, v D and B"""
@@ -137,18 +137,20 @@ class Summarization:
                         output += "."
                     IpList.append(output[:-1])
                     self.prefixList.append(int(dpg.get_value("IP_"+ str(i+1) +"_5")))
-                    dpg.set_value("Result_" + str(i+1), str(output[:-1]))
+                    dpg.set_value("Result_" + str(i+1), "")
             else:
-                dpg.set_value("Result_" + str(i+1), "Zkontrolujte zadanout IP")
+                dpg.set_value("Result_" + str(i+1), "Check entered IP")
         self.listOfIPs= IpList.copy()
 
     def show_edge(self):
+        """Prints IP addresses i D and B - in B shows edge"""
         for i in range(self.count-1):
             output = ""
             outputBinHelp = ""
             outputBin = ""
             edge_done = False
             edgeHelp = self.edge
+
             if ((dpg.get_value("IP_"+ str(i+1) +"_1") != "") and  (dpg.get_value("IP_"+ str(i+1) +"_4") != "") and (dpg.get_value("IP_"+ str(i+1) +"_5") != "")):
                 if dpg.get_value("binary"):
                     for y in range(4):
@@ -171,14 +173,36 @@ class Summarization:
 
                     self.prefixList.append(int(dpg.get_value("IP_"+ str(i+1) +"_5")))
                     dpg.set_value("Result_" + str(i+1), outputBin[:-1])
-                else:
-                    for x in range(4):
-                        output += str(dpg.get_value("IP_"+ str(i+1) +"_" + str(x+1)))
-                        output += "."
-                    self.prefixList.append(int(dpg.get_value("IP_"+ str(i+1) +"_5")))
-                    dpg.set_value("Result_" + str(i+1), str(output[:-1]))
+
             else:
                 dpg.set_value("Result_" + str(i+1), "Check entered IP")
+        self.summarization_output()
+
+    def summarization_output(self):
+        edge_done = False
+        edgeHelp = self.edge
+        sumBinIpFinal = ""
+
+        if dpg.get_value("binary"):
+            for bit in self.sumBinIp:
+                    if bit != ".":
+                        if edgeHelp == 0 and edge_done == False:
+                            sumBinIpFinal += " | "
+                            sumBinIpFinal += str(bit)
+                            edge_done = True
+                        else:
+                            edgeHelp -= 1
+                            sumBinIpFinal += str(bit)
+                    elif bit == ".":
+                        sumBinIpFinal += str(bit)
+                    else:
+                        sumBinIpFinal = "Error"
+            dpg.set_value("SummarizationResult", self.sumIp[:-1] + " / " + str(self.finalPrefix) + "   B: " + sumBinIpFinal[:-1])
+        else:
+            dpg.set_value("SummarizationResult", self.sumIp[:-1] + " / " + str(self.finalPrefix))
+
+
+
 
 w1 = Summarization()
 w1.run()
