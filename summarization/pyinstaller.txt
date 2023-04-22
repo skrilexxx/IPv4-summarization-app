@@ -1,0 +1,1 @@
+c:\Users\Admin\AppData\Local\Programs\Python\Python310\python.exe -m PyInstaller -F --onefile --windowed --icon .\icon.ico --add-data "icon.ico;." -n Summarization main.py

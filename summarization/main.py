@@ -1,4 +1,6 @@
 import dearpygui.dearpygui as dpg
+from os import sep, path
+import sys
 
 class Summarization:
     def __init__(self) -> None:
@@ -12,9 +14,17 @@ class Summarization:
         self.sumBinIp = ""
         self.sumIp = ""
 
+        if getattr(sys, 'frozen', False):
+            self.app_path = sys._MEIPASS
+        else:
+            self.app_path = path.dirname(path.abspath(__file__))
+
+    def relpath(self, path: str) -> str:
+        return self.app_path + sep + path.replace("/", sep)
+
     def run(self) -> None:
         dpg.create_context()
-        dpg.create_viewport(title='Summarization IPv4', width=self.width, height=self.height)
+        dpg.create_viewport(title='Summarization IPv4', width=self.width, height=self.height, small_icon=self.relpath("icon.ico"), large_icon=self.relpath("icon.ico"), min_height=250, min_width=self.width)
         with dpg.window(tag="Primary Window", label="Summarization IPv4", width=self.width, height=self.height):
             dpg.add_group(tag="lines")
             self.add_line()
