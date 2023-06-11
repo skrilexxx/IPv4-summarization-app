@@ -11,7 +11,7 @@
 * Python
 
 ## Progres:
-* 85%
+* 99%
 
 ## Vzhled:
 ![DearPyGui](https://github.com/skrilexxx/Tymovka-20/blob/main/navrh.PNG)
